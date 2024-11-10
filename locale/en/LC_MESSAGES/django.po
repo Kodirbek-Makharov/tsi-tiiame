@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-10 23:10+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\base.html:27
+msgid "project title"
+msgstr ""
+"# 349-000021 - Implementation of a low-cost air quality sensor network in "
+"Central Asia to improve air quality through capacity building and increased "
+"public awareness"
+
+#: .\templates\base.html:34 .\templates\base.html:49 .\templates\base.html:72
+#: .\tsi\settings.py:115
+msgid "English"
+msgstr "English"
+
+#: .\templates\base.html:36 .\templates\base.html:54 .\templates\base.html:71
+#: .\tsi\settings.py:116
+msgid "Russian"
+msgstr "Russian"
+
+#: .\templates\base.html:38 .\templates\base.html:44 .\templates\base.html:70
+#: .\tsi\settings.py:117
+msgid "Uzbek"
+msgstr "Uzbek"
+
+#: .\templates\base.html:66
+msgid "Main Page"
+msgstr "Main Page"
+
+#: .\templates\base.html:67
+msgid "Devices"
+msgstr "Devices"
+
+#: .\templates\base.html:68
+msgid "Devices on map"
+msgstr "Devices on map"
+
+#: .\templates\base.html:69
+msgid "Change password"
+msgstr "Change password"
+
+#: .\templates\base.html:73
+msgid "Logout"
+msgstr "Logout"
+
+#: .\templates\view_measurements.html:9
+msgid "Qurilmalar ro'yxatiga qaytish"
+msgstr "Back to devices list"
+
+#: .\templates\view_measurements.html:24
+msgid "So'nggi soat"
+msgstr "Last hour"
+
+#: .\templates\view_measurements.html:42
+#: .\templates\view_measurements.html:303
+msgid "PM2.5 - So'nggi 24 soat"
+msgstr "PM2.5 - Last 24 hours"
+
+#: .\templates\view_measurements.html:44
+msgid "24 soat"
+msgstr "24 hours"
+
+#: .\templates\view_measurements.html:45
+msgid "30 kun"
+msgstr "30 days"
+
+#: .\templates\view_measurements.html:59
+msgid "Good"
+msgstr "Good"
+
+#: .\templates\view_measurements.html:60
+msgid "Not measured"
+msgstr "Not measured"
+
+#: .\templates\view_measurements.html:61
+msgid "Moderate"
+msgstr "Moderate"
+
+#: .\templates\view_measurements.html:62
+msgid "Unhealthy for sensitive groups"
+msgstr "Unhealthy for sensitive groups"
+
+#: .\templates\view_measurements.html:63
+msgid "Unhealthy"
+msgstr "Unhealthy"
+
+#: .\templates\view_measurements.html:64
+msgid "Very unhealthy"
+msgstr "Very unhealthy"
+
+#: .\templates\view_measurements.html:65
+msgid "Hazardous"
+msgstr "Hazardous"
+
+#: .\templates\view_measurements.html:310
+msgid "PM2.5 - So'nggi 30 kun"
+msgstr "PM2.5 - Last 24 hours"

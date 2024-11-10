@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Devices List</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <form action="{% url 'get-data-all'%}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3 float-start" style="width: 400px; ">
+            <span class="input-group-text"><i class="bi bi-cloud-arrow-down"></i></span>
+            <input type="number" id="days" class="form-control col-md-4" placeholder="Input days" name="age">
+            <button type="submit" class="btn btn-primary">Get data for all devices</button>
+        </div>
+    </form>
+    <!-- <input type="text" class="form-control col-3" style="flex: 0 1 100px;" name="" id="">  -->
+    <!-- <a href="{% url 'get-data-all' 5 %}" class="btn btn-primary mb-3">Get data for all devices</a> -->
+    <a href="{% url 'refresh_devices' %}" class="btn btn-primary mb-3 float-end">Refresh Devices</a>
+    <a href="{% url 'devices_map' %}" class="btn btn-primary mb-3 me-3 float-end">Map View</a>
+    <a href="{% url 'get-data-all-last' %}" class="btn btn-primary mb-3 me-3 float-end">Get all last data</a>
+    <!-- path('get-data-all/<int:age>', dv.get_data_all, name='get-data-all'), -->
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> <a href="?order_by=name&sort={% if current_order_by == 'name' and current_sort == 'asc' %}desc{% else %}asc{% endif %}">
+                        Device Name
+                        {% if current_order_by == 'name' %}
+                        {% if current_sort == 'asc' %} ▲ {% else %} ▼ {% endif %}
+                        {% endif %}
+                    </a></th>
+                <th> <a href="?order_by=last_measurement_time&sort={% if current_order_by == 'last_measurement_time' and current_sort == 'asc' %}desc{% else %}asc{% endif %}">
+                        Last Measurement Time
+                        {% if current_order_by == 'last_measurement_time' %}
+                        {% if current_sort == 'asc' %} ▲ {% else %} ▼ {% endif %}
+                        {% endif %}
+                    </a></th>
+                <th>Is Indoor</th>
+                <th>Is Public</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+            <tr>
+                <td>{{ device.name }}</td>
+                <td>{{ device.last_measurement_time }}</td>
+                <td>{{ device.is_indoor }}</td>
+                <td><a href="{% url 'change-public' device.pk %}">{{ device.is_public }}</a></td>
+                <td>
+                    <form action="{% url 'get-data' %}" method="post">
+                        {% csrf_token %}
+                        <input type="number" min=1 max=90 value="30" name=age class="">
+                        <input type="hidden" name="device" value="{{ device.pk }}">
+                        <button type="submit" class='btn btn-warning btn-sm mb-1'>Get data</button>
+                    </form>
+                    <a href="{% url 'view_measurements' device.pk %}" class='btn btn-warning btn-sm mt-1'>Show data</a>
+                    <a href="{% url 'view_measurements_full' device.pk %}" class='btn btn-warning btn-sm mt-1'>Show full data</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No devices found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock main %}

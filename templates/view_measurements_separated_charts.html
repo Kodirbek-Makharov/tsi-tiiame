@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+<div class="container mt-4">
+    <h1 class="text-center">{{ device.name }} qurilmasining ma'lumotlari</h1>
+
+    {% if messages %}
+    <div class="alert alert-{{ messages.0.tags }}">
+        {{ messages.0 }}
+    </div>
+    {% endif %}
+    {% with measurements_by_hour|last as lst %}
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-4 col-lg-3 mb-3">
+                <div class="gauge bg-light rounded d-flex align-items-center justify-content-center shadow" id="gauge">
+                    <div class="gauge-content bg-white rounded shadow-sm p-3 text-center">
+                        <span id="pm25-value" class="display-6 fw-bold"> {{ lst.pm25|floatformat:2 }}</span>
+                        <p id="air-quality-category" class="fw-semibold mt-2">Moderate</p>
+                        <p id="air-quality-time">{{lst.time}}</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <h3 class="text-center">Havo sifati ko'rsatkichlari</h3>
+                <table class="table table-hover">
+                    <tr class="header">
+                        <th style="vertical-align:middle">Indeks qiymatlari</th>
+                        <th style="vertical-align:middle">Daraja</th>
+                        <th style="vertical-align:middle">Havo sifati tavsifi</th>
+                    </tr>
+                    <tr class="good">
+                        <td>0-50</td>
+                        <td>Yaxshi</td>
+                        <td>Havo sifati qoniqarli va havoning ifloslanishi juda kam yoki umuman xavf tug'dirmaydi.</td>
+                    </tr>
+                    <tr class="moderate">
+                        <td>51-100</td>
+                        <td>O'rtacha</td>
+                        <td>Havoning sifati maqbuldir. Biroq, ba'zi odamlar, ayniqsa havo ifloslanishiga juda sezgir bo'lganlar uchun xavf mavjud.</td>
+                    </tr>
+                    <tr class="unhealthy1">
+                        <td>101-150</td>
+                        <td>Sezuvchan guruhlar uchun zararli</td>
+                        <td>Sezuvchan guruhlarning a'zolari sog'lig'iga ta'sir qilishi mumkin. Keng jamoatchilikka kamroq ta'sir ko'rsatadi.</td>
+                    </tr>
+                    <tr class="unhealthy2">
+                        <td>151-200</td>
+                        <td>Zararli</td>
+                        <td>Jamoatchilikning ayrim a'zolari sog'lig'iga ta'sir qilishi mumkin; sezuvchan guruhlarning a'zolari sog'lig'iga jiddiy ta'sir ko'rsatishi mumkin.</td>
+                    </tr>
+                    <tr class="unhealthy3">
+                        <td>201-300</td>
+                        <td>Juda zararli</td>
+                        <td>Sog'liqni saqlash bo'yicha ogohlantirish: sog'likka ta'sir qilish xavfi hamma uchun oshadi.</td>
+                    </tr>
+                    <tr class="hazardous">
+                        <td>300 dan yuqori</td>
+                        <td>Xavfli</td>
+                        <td>Favqulodda vaziyatlarning sog'liq haqida ogohlantirishi: har bir kishi uchun ko'proq ta'sir qiladi.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pm25Value = parseFloat("{{ lst.pm25|floatformat:2  }}");
+        document.getElementById('pm25-value').textContent = pm25Value;
+
+        const gauge = document.getElementById('gauge');
+        const category = document.getElementById('air-quality-category');
+        if (pm25Value <= 50) {
+            gauge.classList.add('good');
+            category.textContent = 'Yaxshi';
+        } else if (pm25Value <= 100) {
+            gauge.classList.add('moderate');
+            category.textContent = "O'rtacha";
+        } else if (pm25Value <= 150) {
+            gauge.classList.add('unhealthy1');
+            category.textContent = 'Sezuvchan guruhlar uchun zararli';
+        } else if (pm25Value <= 200) {
+            gauge.classList.add('unhealthy2');
+            category.textContent = 'Zararli';
+        } else if (pm25Value <= 300) {
+            gauge.classList.add('unhealthy3');
+            category.textContent = 'Juda zararli';
+        } else {
+            gauge.classList.add('hazardous');
+            category.textContent = 'Xavfli';
+        }
+    </script>
+    {% endwith %}
+
+
+
+    <h3 class="text-center my-3">PM2.5 Levels - Last 24 Hours</h3>
+    <canvas id="pm25BarChart24" width="400" height="200"></canvas>
+
+    <h3 class="text-center my-3">PM2.5 Levels - Last 30 Days</h3>
+    <canvas id="pm25BarChart30" width="400" height="200"></canvas>
+
+    <script>
+
+        let pm25Chart24 = null;
+        let pm25Chart30 = null;
+
+        function fetchDataAndRenderChart() {
+            fetch(`/api/last-day/{{ device.id }}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const ctx24 = document.getElementById('pm25BarChart24').getContext('2d');
+                    const ctx30 = document.getElementById('pm25BarChart30').getContext('2d');
+                    data24 = data.data24;
+                    data30 = data.data30;
+                    const backgroundColors = data24.pm25_values.map(value => {
+                        if (value <= 50) {
+                            return 'rgba(0, 228, 0, 0.5)'; // Good 
+                        } else if (value <= 100) {
+                            return 'rgba(255, 235, 59, 0.5)'; // Moderate 
+                        } else if (value <= 150) {
+                            return 'rgba(255, 145, 0, 0.5)'; // Unhealthy for Sensitive Groups
+                        } else if (value <= 200) {
+                            return 'rgba(255, 0, 0, 0.5)'; // Unhealthy 
+                        } else if (value <= 300) {
+                            return 'rgba(143, 63, 151, 0.5)'; // Very Unhealthy
+                        } else {
+                            return 'rgba(126, 0, 35, 0.5)'; // Hazardous
+                        }
+                    });
+                    if (pm25Chart24) {
+                        pm25Chart24.data.labels = data24.labels;
+                        pm25Chart24.data.datasets[0].data = data24.pm25_values;
+                        pm25Chart24.update();
+                    } else {
+                        pm25Chart24 = new Chart(ctx24, {
+                            type: 'bar',
+                            data: {
+                                labels: data24.labels,
+                                datasets: [{
+                                    label: 'PM2.5 Level (µg/m³)',
+                                    data: data24.pm25_values,
+                                    backgroundColor: backgroundColors,
+                                    // borderColor: 'rgba(54, 162, 235, 1)',
+                                    // borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    x: { title: { display: true, text: 'Time (Hour:Minute)' } },
+                                    y: { title: { display: true, text: 'PM2.5 Level (µg/m³)' }, beginAtZero: true }
+                                },
+                                plugins: {
+                                    legend: { display: false }
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true,
+                            }
+                        });
+                    }
+
+                    const backgroundColors30 = data30.pm25_values.map(value => {
+                        if (value <= 50) {
+                            return 'rgba(0, 228, 0, 0.5)'; // Good 
+                        } else if (value <= 100) {
+                            return 'rgba(255, 235, 59, 0.5)'; // Moderate 
+                        } else if (value <= 150) {
+                            return 'rgba(255, 145, 0, 0.5)'; // Unhealthy for Sensitive Groups
+                        } else if (value <= 200) {
+                            return 'rgba(255, 0, 0, 0.5)'; // Unhealthy 
+                        } else if (value <= 300) {
+                            return 'rgba(143, 63, 151, 0.5)'; // Very Unhealthy
+                        } else {
+                            return 'rgba(126, 0, 35, 0.5)'; // Hazardous
+                        }
+                    });
+                    if (pm25Chart30) {
+                        pm25Chart30.data.labels = data30.labels;
+                        pm25Chart30.data.datasets[0].data = data30.pm25_values;
+                        pm25Chart30.update();
+                    } else {
+                        pm25Chart30 = new Chart(ctx30, {
+                            type: 'bar',
+                            data: {
+                                labels: data30.labels,
+                                datasets: [{
+                                    label: 'PM2.5 Level (µg/m³)',
+                                    data: data30.pm25_values,
+                                    backgroundColor: backgroundColors30,
+                                    // borderColor: 'rgba(54, 162, 235, 1)',
+                                    // borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    x: { title: { display: true, text: 'Date (Day-Month-Year)' } },
+                                    y: { title: { display: true, text: 'PM2.5 Level (µg/m³)' }, beginAtZero: true }
+                                },
+                                plugins: {
+                                    legend: { display: false }
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true,
+                            }
+                        });
+                    }
+
+                })
+                .catch(error => console.error('Error fetching PM2.5 data:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDataAndRenderChart();
+        });
+
+    </script>
+
+    <a href="{% url 'devices' %}" class="btn btn-secondary">Back to Devices</a>
+</div>
+
+
+{% endblock main %}
+
+{% block myjs %}
+{% endblock myjs %}
+
+
+{% block mycss %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .good {
+        background-color: rgb(0, 228, 0) !important;
+        --bs-table-bg: rgb(0, 228, 0) !important;
+        /* background-color: #00e676 !important; */
+    }
+
+    .moderate {
+        /* background-color: yellow !important; */
+        background-color: #ffeb3b !important;
+        --bs-table-bg: #ffeb3b !important;
+        /* color: #333333; */
+    }
+
+    .unhealthy1 {
+        background-color: #ff9100 !important;
+        --bs-table-bg: #ff9100 !important;
+    }
+
+    .unhealthy2 {
+        background-color: red !important;
+        --bs-table-bg: red !important;
+    }
+
+    .unhealthy3 {
+        background-color: rgb(143, 63, 151) !important;
+        --bs-table-bg: rgb(143, 63, 151) !important;
+    }
+
+    .hazardous {
+        background-color: rgb(126, 0, 35) !important;
+        --bs-table-bg: rgb(126, 0, 35) !important;
+    }
+
+    table .hazardous,
+    table .unhealthy3 {
+        color: aliceblue !important;
+        --bs-table-color: aliceblue !important;
+        --bs-table-hover-color: aliceblue !important;
+
+    }
+
+    .gauge {
+        width: 270px;
+        height: 270px;
+        margin: auto;
+    }
+
+    .gauge-content {
+        padding: 5px;
+        width: 180px;
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    tr.header {
+        background-color: rgb(127, 161, 255);
+        --bs-table-bg: rgb(127, 161, 255);
+        text-align: center;
+    }
+</style>
+{% endblock mycss %}
