@@ -56,13 +56,6 @@
                 iconSize: [25, 65],
             }
         });
-        var icon1 = new LeafIcon({ iconUrl: '{% static "icons/location-1.svg" %}' }),
-            icon2 = new LeafIcon({ iconUrl: '{% static "icons/location-2.svg" %}' }),
-            icon3 = new LeafIcon({ iconUrl: '{% static "icons/location-3.svg" %}' }),
-            icon4 = new LeafIcon({ iconUrl: '{% static "icons/location-4.svg" %}' }),
-            icon5 = new LeafIcon({ iconUrl: '{% static "icons/location-5.svg" %}' }),
-            icon6 = new LeafIcon({ iconUrl: '{% static "icons/location-6.svg" %}' });
-        let icon = null;
         let str = "{{devices_js|safe}}";
         str = str.replaceAll("\"", "&quot;")
         str = str.replaceAll("'", "\"");
@@ -72,37 +65,24 @@
         function getColor(value) {
             if (!value) return 'rgba(189, 195, 199)';
             if (value <= 50) return 'rgba(0, 228, 0)';     // Good 
-            if (value <= 100) return 'rgba(255, 235, 59)'; // Moderate 
-            if (value <= 150) return 'rgba(255, 145, 0)';  // Unhealthy for Sensitive Groups
-            if (value <= 200) return 'rgba(255, 0, 0)';    // Unhealthy 
-            if (value <= 300) return 'rgba(143, 63, 151)'; // Very Unhealthy
-            return 'rgba(126, 0, 35)';                     // Hazardous
+            return 'rgba(255, 235, 59)'; // Moderate 
+            // if (value <= 100) return 'rgba(255, 235, 59)'; // Moderate 
+            // if (value <= 150) return 'rgba(255, 145, 0)';  // Unhealthy for Sensitive Groups
+            // if (value <= 200) return 'rgba(255, 0, 0)';    // Unhealthy 
+            // if (value <= 300) return 'rgba(143, 63, 151)'; // Very Unhealthy
+            // return 'rgba(126, 0, 35)';                     // Hazardous
         }
 
 
         devices.forEach(device => {
             const lat = parseFloat(device.lat);
             const lng = parseFloat(device.lng);
-            // let pm25 = device.pm25;
-            // if (pm25 <= 50) icon = icon1;  // Good 
-            // else if (pm25 <= 100) icon = icon2; // Moderate 
-            // else if (pm25 <= 150) icon = icon3; // Unhealthy for Sensitive Groups
-            // else if (pm25 <= 200) icon = icon4; // Unhealthy 
-            // else if (pm25 <= 300) icon = icon5; // Very Unhealthy
-            // else if (pm25 > 300) icon = icon6;  // Hazardous
-
-            const color = getColor(device.pm25);
-            const icon = L.divIcon({
-                className: 'custom-icon',
-                html: `<div style="
+            if (!device.is_indoor)
+                marker_html = `<div style="
                                 background-image: url('{% static "icons/location.png" %}');
                                 background-size: cover;
                                 background-repeat: no-repeat;
-                                // border: 1px solid red;
-                                //  border-radius: 50%;
                                 position: absolute;
-                                // top: -40px;
-                                // left: -10px;
                                 width: 36px; 
                                 height: 48px; 
                                  display: flex; 
@@ -117,12 +97,37 @@
                                                             padding: 2px 0;
                                                             font-size: 16px;
                                                             margin-top: 2.5px;
-                                    ">${!device.pm25 ? '!' : device.pm25}</span></div>`,
+                                    ">${!device.pm25 ? '!' : device.pm25}</span></div>`;
+            else
+                marker_html = `<div style="
+                                background-image: url('{% static "icons/home-location.png" %}');
+                                background-size: cover;
+                                background-repeat: no-repeat;
+                                position: absolute;
+                                width: 36px; 
+                                height: 48px; 
+                                 display: flex; 
+                                 align-items: start; 
+                                 justify-content: center; 
+                                 font-weight: bold;"><span style="width: 30px;
+                                                            height: 30px;
+                                                            border-radius: 50%;
+                                                            background-color: ${color};
+                                                            color: black;
+                                                            text-align: center;
+                                                            padding: 2px 0;
+                                                            font-size: 16px;
+                                                            margin-top: 2.5px;
+                                    ">${!device.pm25 ? '!' : device.pm25}</span></div>`;
+            const color = getColor(device.pm25);
+            const icon = L.divIcon({
+                className: 'custom-icon',
+                html: marker_html,
                 iconSize: [35, 47],
                 iconAnchor: [17.5, 49] // Center the icon on the location
             });
 
-            var marker = L.marker([lat, lng], { icon: icon }).addTo(map);
+            var marker = L.marker([lat, lng], { icon, riseOnHover: true }).addTo(map);
 
             let link = "{% url 'view_measurements' 12345 %}".replace(/12345/, device.pk);
             marker.bindPopup(`<a href='${link}' target=_blank>${device.name}</a><br>

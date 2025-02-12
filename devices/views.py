@@ -107,10 +107,10 @@ def index(request):
     devices_js=[]
     for instance in devices:
         if instance.pm25 is not None:
-            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude,
+            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude, 'is_indoor': int(instance.is_indoor),
                             'pm25':instance.pm25, 'when_local': instance.when_local.strftime('%Y-%m-%d %H:%M') or "NaN"})
         else:
-            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude,
+            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude, 'is_indoor': int(instance.is_indoor),
                             'pm25':'', 'when_local': ''})
 
     return render(request, 'index.html', context={'devices':devices, "devices_js": devices_js})
@@ -151,10 +151,10 @@ def devices_map(request):
     devices_js=[]
     for instance in devices:
         if instance.pm25 is not None:
-            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude,
+            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude, 'is_indoor': int(instance.is_indoor),
                             'pm25':instance.pm25, 'when_local': instance.when_local.strftime('%Y-%m-%d %H:%M') or "NaN"})
         else:
-            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude,
+            devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude, 'is_indoor': int(instance.is_indoor),
                             'pm25':'', 'when_local': ''})
     # latest_measurement = Measurement.objects.filter(device=OuterRef('pk')).order_by('-when').values('when_local', 'pm25')[:1]
     # devices = Devices.objects.annotate(last_measurement_time=Subquery(latest_measurement))#.all()
@@ -365,7 +365,7 @@ def view_measurements(request, device_id):
         last = np.nan
         last_ = np.nan
 
-    return render(request, 'view_measurements.html', {
+    return render(request, 'view_measurements_uzstandart.html', {
         'device': device,
         'measurements': measurements,
         # 'measurements_by_hour': df_,

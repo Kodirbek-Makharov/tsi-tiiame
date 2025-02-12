@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+<div class="container mt-4">
+    <h2 class="text-center fw-bold" style="position: relative;">{{ device.name }}
+        {% if user.is_authenticated %}
+        <a href="{% url 'devices' %}" class="btn btn-secondary float-end">{% trans "Qurilmalar ro'yxatiga qaytish" %}</a>
+        {% endif %}
+    </h2>
+
+    {% if messages %}
+    <div class="alert alert-{{ messages.0.tags }}">
+        {{ messages.0 }}
+    </div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    {% endif %}
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-4 col-lg-3 mb-3">
+                <div class="gauge bg-light rounded d-flex align-items-center justify-content-center shadow" id="gauge" style="display: none!important;">
+                    <div class="gauge-content bg-white rounded shadow-sm p-3 text-center" style="position: relative;">
+                        <span style="position: absolute; top:-20%;" class="fw-bold">{% trans "So'nggi soat" %}</span>
+                        <span id="pm25-value" class="display-6 fw-bold"> {{ lst.pm25|floatformat:2 }}</span>
+                        <p id="air-quality-category" class="fw-semibold mt-2">Moderate</p>
+                        <p id="air-quality-time">{{lst.time}}</p>
+
+                    </div>
+                </div>
+                <div class="gauge bg-light rounded d-flex align-items-center justify-content-center shadow" id="gauge_">
+                    <div class="gauge-content bg-white rounded shadow-sm p-3 text-center">
+                        <span id="pm25-value_" class="display-6 fw-bold"> {{ lst_.pm25|floatformat:2 }}</span>
+                        <p id="air-quality-category_" class="fw-semibold mt-2">Moderate</p>
+                        <p id="air-quality-time_">{{lst_.time}}</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <h3 class="text-center my-3" id="pm25BarChartTitle">{% trans "PM2.5 - So'nggi 24 soat" %}
+                    <div class="btn-group" role="group" aria-label="Toggle Data" style="float: right;">
+                        <button id="btn-daily" class="btn btn-primary">{% trans '24 soat' %}</button>
+                        <button id="btn-monthly" class="btn btn-secondary">{% trans '30 kun' %}</button>
+                    </div>
+
+                </h3>
+                <canvas id="pm25BarChart" width="400" height="200"></canvas>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pm25Value = parseFloat("{{ lst.pm25|floatformat:2  }}");
+        document.getElementById('pm25-value').textContent = pm25Value;
+        let nm = "{% trans 'Not measured' %}";
+        let good = "{% trans 'Good' %}";
+        let moderate = "{% trans 'Moderate' %}";
+        let unhealthy1 = "{% trans 'Unhealthy for sensitive groups' %}";
+        let unhealthy2 = "{% trans 'Unhealthy' %}";
+        let unhealthy3 = "{% trans 'Very unhealthy' %}";
+        let hazardous = "{% trans 'Hazardous' %}";
+        const gauge = document.getElementById('gauge');
+        const category = document.getElementById('air-quality-category');
+        if (isNaN(pm25Value)) {
+            gauge.classList.add('error');
+            category.textContent = nm;
+        }
+        else if (pm25Value <= 50) {
+            gauge.classList.add('good');
+            category.textContent = good;
+        } else {
+            gauge.classList.add('moderate');
+            category.textContent = moderate;
+        }
+
+
+        const pm25Value_ = parseFloat("{{ lst_.pm25|floatformat:2  }}");
+        document.getElementById('pm25-value_').textContent = pm25Value_;
+
+        const gauge_ = document.getElementById('gauge_');
+        const category_ = document.getElementById('air-quality-category_');
+        if (isNaN(pm25Value_)) {
+            gauge_.classList.add('error');
+            category_.textContent = nm;
+        }
+        else if (pm25Value_ <= 50) {
+            gauge_.classList.add('good');
+            category_.textContent = good;
+        } else {
+            gauge_.classList.add('moderate');
+            category_.textContent = moderate;
+        }
+    </script>
+    {% if LANGUAGE_CODE == "uz" %}
+    <h3 class="text-center mt-3">Havo sifati ko'rsatkichlari</h3>
+    <table class="table table-hover">
+        <tr class="header">
+            <th style="vertical-align:middle">Indeks qiymatlari</th>
+            <th style="vertical-align:middle">Daraja</th>
+            <th style="vertical-align:middle">Havo sifati tavsifi</th>
+        </tr>
+        <tr class="good">
+            <td>0-50</td>
+            <td>Yaxshi</td>
+            <td>Havo sifati qoniqarli va havoning ifloslanishi juda kam yoki umuman xavf tug'dirmaydi.</td>
+        </tr>
+        <tr class="moderate">
+            <td>51-100</td>
+            <td>O'rtacha</td>
+            <td>Havoning sifati maqbuldir. Biroq, ba'zi odamlar, ayniqsa havo ifloslanishiga juda sezgir bo'lganlar uchun xavf mavjud.</td>
+        </tr>
+    </table>
+    {% elif LANGUAGE_CODE == "ru" %}
+    <h3 class="text-center mt-3">Показатели качества воздуха</h3>
+    <table class="table table-hover">
+        <tr class="header">
+            <th style="vertical-align:middle">Значения индекса</th>
+            <th style="vertical-align:middle">Уровень</th>
+            <th style="vertical-align:middle">Описание качества воздуха</th>
+        </tr>
+        <tr class="good">
+            <td>0-50</td>
+            <td>Хорошо</td>
+            <td>Качество воздуха удовлетворительное, а загрязнение воздуха представляет небольшой или нулевой риск.</td>
+        </tr>
+        <tr class="moderate">
+            <td>51-100</td>
+            <td>Умеренно</td>
+            <td>Качество воздуха приемлемое. Однако для некоторых людей, особенно тех, кто необычно чувствителен к загрязнению воздуха, может быть риск.</td>
+        </tr>
+    </table>
+    {% elif LANGUAGE_CODE == "en" %}
+    <h3 class="text-center mt-3">Air quality indicators</h3>
+    <table class="table table-hover">
+        <tr class="header">
+            <th style="vertical-align:middle">Values of Index</th>
+            <th style="vertical-align:middle">Level</th>
+            <th style="vertical-align:middle">Description of Air Quality</th>
+        </tr>
+        <tr class="good">
+            <td>0-50</td>
+            <td>Good</td>
+            <td>Air quality is satisfactory, and air pollution poses little or no risk.</td>
+        </tr>
+        <tr class="moderate">
+            <td>51-100</td>
+            <td>Moderate</td>
+            <td>Air quality is acceptable. However, there may be a risk for some people, particularly those who are unusually sensitive to air pollution.</td>
+        </tr>
+    </table>
+    {% endif %}
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const ctx = document.getElementById('pm25BarChart').getContext('2d');
+            let pm25Chart;
+            let chartData;
+
+            // Fetch data once
+            fetch('/api/pm25/{{ device.id }}')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    chartData = data;
+                    createChart(chartData.data24.labels, chartData.data24.pm25_values);
+                });
+
+            function createChart(labels, pm25_values) {
+                const backgroundColors = pm25_values.map(value => {
+                    if (!value) return 'rgba(189, 195, 199, 0.5)';
+                    if (value <= 50) return 'rgba(0, 228, 0, 0.5)';     // Good 
+                    return 'rgba(255, 235, 59, 0.5)';                   // Moderate 
+                });
+
+                if (pm25Chart) {
+                    pm25Chart.data.labels = labels;
+                    pm25Chart.data.datasets[0].data = pm25_values;
+                    pm25Chart.data.datasets[0].backgroundColor = backgroundColors;
+                    pm25Chart.update();
+                } else {
+                    pm25Chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'PM2.5 Level (µg/m³)',
+                                data: pm25_values,
+                                backgroundColor: backgroundColors,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                x: { title: { display: false, text: '' } },
+                                y: { title: { display: true, text: 'PM2.5 (µg/m³)' }, beginAtZero: true }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            responsive: true,
+                            maintainAspectRatio: true
+                        }
+                    });
+                }
+            }
+            document.getElementById("btn-daily").addEventListener("click", function () {
+                createChart(chartData.data24.labels, chartData.data24.pm25_values);
+                this.className = "btn btn-primary";
+                document.getElementById("btn-monthly").className = "btn btn-secondary";
+                document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{% trans "PM2.5 - So'nggi 24 soat" %}`;
+            });
+
+            document.getElementById("btn-monthly").addEventListener("click", function () {
+                createChart(chartData.data30.labels, chartData.data30.pm25_values);
+                this.className = "btn btn-primary";
+                document.getElementById("btn-daily").className = "btn btn-secondary";
+                document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{% trans "PM2.5 - So'nggi 30 kun" %}`;
+            });
+        });
+
+    </script>
+</div>
+
+
+{% endblock main %}
+
+{% block myjs %}
+{% endblock myjs %}
+
+
+{% block mycss %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .error {
+        background-color: rgba(189, 195, 199) !important;
+        --bs-table-bg: rgba(189, 195, 199) !important;
+        /* background-color: #00e676 !important; */
+    }
+
+
+    .good {
+        background-color: rgb(0, 228, 0) !important;
+        --bs-table-bg: rgb(0, 228, 0) !important;
+        /* background-color: #00e676 !important; */
+    }
+
+    .moderate {
+        /* background-color: yellow !important; */
+        background-color: #ffeb3b !important;
+        --bs-table-bg: #ffeb3b !important;
+        /* color: #333333; */
+    }
+
+    .unhealthy1 {
+        background-color: #ff9100 !important;
+        --bs-table-bg: #ff9100 !important;
+    }
+
+    .unhealthy2 {
+        background-color: red !important;
+        --bs-table-bg: red !important;
+    }
+
+    .unhealthy3 {
+        background-color: rgb(143, 63, 151) !important;
+        --bs-table-bg: rgb(143, 63, 151) !important;
+    }
+
+    .hazardous {
+        background-color: rgb(126, 0, 35) !important;
+        --bs-table-bg: rgb(126, 0, 35) !important;
+    }
+
+    table .hazardous,
+    table .unhealthy3 {
+        color: aliceblue !important;
+        --bs-table-color: aliceblue !important;
+        --bs-table-hover-color: aliceblue !important;
+
+    }
+
+    .gauge {
+        /* width: 270px; */
+        /* height: 270px; */
+        width: 100%;
+        max-width: 270px;
+        aspect-ratio: 1 / 1;
+        height: auto;
+
+        margin: auto;
+    }
+
+    .gauge-content {
+        padding: 5px;
+        /* width: 180px;
+        height: 180px; */
+        width: 66.67%;
+        height: 66.67%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    tr.header {
+        background-color: rgb(127, 161, 255);
+        --bs-table-bg: rgb(127, 161, 255);
+        text-align: center;
+    }
+</style>
+{% endblock mycss %}

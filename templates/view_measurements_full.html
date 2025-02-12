@@ -18,7 +18,7 @@
             <tr>
                 <th>Timestamp</th>
                 <th>PM2.5</th>
-                <th>PM10</th>
+                <th>PM2.5 AQI</th>
                 <th>Temperature</th>
                 <th>Humidity</th>
                 <th>CO2</th>
@@ -31,7 +31,7 @@
             <tr>
                 <td>{{ measurement.when_local|date:"Y.m.d H:i:s" }}</td>
                 <td>{{ measurement.pm25 }}</td>
-                <td>{{ measurement.pm10 }}</td>
+                <td>{{ measurement.pm25aqi }}</td>
                 <td>{{ measurement.temperature }}</td>
                 <td>{{ measurement.humidity }}</td>
                 <td>{{ measurement.co2 }}</td>

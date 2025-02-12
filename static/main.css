@@ -73,3 +73,84 @@
     outline-offset: -1px !important;
     border-bottom: none !important;
 }
+
+.house1 {
+    bottom: 10px;
+    position: relative;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(0, 228, 0);
+}
+
+.house1::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    height: 35px;
+    width: 35px;
+    transform: translate(-50%) rotate(45deg);
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    background-color: rgba(0, 228, 0);
+    z-index: -2
+}
+
+.house1::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%);
+    background:
+        linear-gradient(to bottom right, rgb(0, 228, 0) 50%, transparent 50%) bottom right,
+        linear-gradient(to bottom left, rgb(0, 228, 0) 50%, transparent 50%) bottom left;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 40px;
+}
+
+
+.house2 {
+    bottom: 10px;
+    position: relative;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(0, 228, 0);
+}
+
+.house2::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    height: 40px;
+    width: 40px;
+    transform: translate(-50%) rotate(45deg);
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    background-color: rgba(0, 228, 0);
+    z-index: -2
+}
+
+.house2::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%);
+    background:
+        linear-gradient(to bottom right, rgb(0, 228, 0) 50%, transparent 50%) bottom right,
+        linear-gradient(to bottom left, rgb(0, 228, 0) 50%, transparent 50%) bottom left;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 40px;
+}
