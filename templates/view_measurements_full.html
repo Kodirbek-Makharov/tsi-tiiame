@@ -29,7 +29,7 @@
         <tbody>
             {% for measurement in page_obj %}
             <tr>
-                <td>{{ measurement.when_local|date:"Y.m.d H:i:s" }}</td>
+                <td>{{ measurement.when|date:"Y.m.d H:i:s (T)" }}</td>
                 <td>{{ measurement.pm25 }}</td>
                 <td>{{ measurement.pm25aqi }}</td>
                 <td>{{ measurement.temperature }}</td>

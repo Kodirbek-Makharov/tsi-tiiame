@@ -5,7 +5,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.utils import timezone
 from django.db.models import Prefetch, OuterRef, Subquery, Max, Q
-from django.utils import timezone
+from django.utils.timezone import make_aware, localtime
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.utils.safestring import mark_safe
@@ -90,20 +90,19 @@ def index(request):
     #     devices_js.append({'pk': instance.pk, 'name': instance.name, 'lat': instance.latitude, 'lng': instance.longitude,
     #                        'pm25':instance.latest_measurement[0].pm25, 'mtime': instance.latest_measurement[0].when_local.strftime('%Y-%m-%d %H:%M')})
 
+    local_date = localtime().date()
+    today_start = make_aware(datetime.combine(local_date, datetime.min.time()))
+    today_end = make_aware(datetime.combine(local_date, datetime.max.time()))
 
-    #with today's latest measure
-    today_start = datetime.combine(timezone.now().date(), datetime.min.time())
-    today_end = datetime.combine(timezone.now().date(), datetime.max.time())
     today_measurements = Measurement.objects.filter(
         device=OuterRef('pk'),
-        when_local__range=(today_start, today_end)
+        when__range=(today_start, today_end)
     ).order_by('-when')
 
     devices = Devices.objects.filter(is_public=True).annotate(
         pm25=Subquery(today_measurements.values('pm25')[:1]),
         when_local=Subquery(today_measurements.values('when_local')[:1])
     )
-
     devices_js=[]
     for instance in devices:
         if instance.pm25 is not None:
@@ -120,7 +119,7 @@ def devices(request):
     sort_direction = request.GET.get('sort', 'asc') 
 
 
-    latest_measurement = Measurement.objects.filter(device=OuterRef('pk')).order_by('-when').values('when_local')[:1]
+    latest_measurement = Measurement.objects.filter(device=OuterRef('pk')).order_by('-when').values('when')[:1]
     devices = Devices.objects.annotate(last_measurement_time=Subquery(latest_measurement))#.all()
 
     if sort_direction == 'desc':
@@ -136,11 +135,12 @@ def devices(request):
     return render(request, 'devices.html', context)
 
 def devices_map(request):
-    today_start = datetime.combine(timezone.now().date(), datetime.min.time())
-    today_end = datetime.combine(timezone.now().date(), datetime.max.time())
+    local_date = localtime().date()
+    today_start = make_aware(datetime.combine(local_date, datetime.min.time()))
+    today_end = make_aware(datetime.combine(local_date, datetime.max.time()))
     today_measurements = Measurement.objects.filter(
         device=OuterRef('pk'),
-        when_local__range=(today_start, today_end)
+        when__range=(today_start, today_end)
     ).order_by('-when')
 
     devices = Devices.objects.annotate(
@@ -340,7 +340,8 @@ def view_measurements_full(request, device_id):
 def view_measurements(request, device_id):
 
     # shuni to'g'irlash kerak!!!
-    today=timezone.now().date()
+    today=timezone.localtime().date()
+    # today=datetime.now().date()
     device = Devices.objects.filter(id=device_id).first()
     
     if not device:
@@ -870,7 +871,7 @@ def aget_data_all_last(request):
 
 @login_exempt
 def pm25_for_chart(request, device_id):
-    now = timezone.now()
+    now = timezone.localtime()
     last_24_hours = now - timezone.timedelta(hours=24)
     measurements = Measurement.objects.filter(
         device_id=device_id,

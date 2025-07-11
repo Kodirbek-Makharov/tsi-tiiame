@@ -117,8 +117,8 @@ LANGUAGES = [
     ('uz', _('Uzbek')),
 ]
 
-TIME_ZONE = 'UTC'
-# TIME_ZONE = 'Asia/Tashkent'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
