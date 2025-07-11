@@ -154,3 +154,8 @@
     width: 30px;
     height: 40px;
 }
+
+h1 span a {
+    text-decoration: none !important;
+    color: black !important;
+}

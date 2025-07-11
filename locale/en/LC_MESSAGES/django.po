@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-10 23:10+0500\n"
+"POT-Creation-Date: 2025-07-11 19:11+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,24 +18,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\templates\base.html:27
-msgid "project title"
+msgid "project title new"
 msgstr ""
-"# 349-000021 - Implementation of a low-cost air quality sensor network in "
-"Central Asia to improve air quality through capacity building and increased "
-"public awareness"
+"<a href='/'>Data obtained from sensors installed under the project: “Implementation of a "
+"low-cost air quality sensor network in Central Asia to improve air quality "
+"through capacity building and increased public awareness”.</a><br><a href='https://tiiame.uz/departments/departments?id=637'>https://tiiame."
+"uz/departments/departments?id=637</a><br>PM<sub>2.5</sub>, µg/m<sup>3</sup>"
 
-#: .\templates\base.html:34 .\templates\base.html:49 .\templates\base.html:72
-#: .\tsi\settings.py:115
+#: .\templates\base.html:34 .\templates\base.html:49 .\tsi\settings.py:115
 msgid "English"
 msgstr "English"
 
-#: .\templates\base.html:36 .\templates\base.html:54 .\templates\base.html:71
-#: .\tsi\settings.py:116
+#: .\templates\base.html:36 .\templates\base.html:54 .\tsi\settings.py:116
 msgid "Russian"
 msgstr "Russian"
 
-#: .\templates\base.html:38 .\templates\base.html:44 .\templates\base.html:70
-#: .\tsi\settings.py:117
+#: .\templates\base.html:38 .\templates\base.html:44 .\tsi\settings.py:117
 msgid "Uzbek"
 msgstr "Uzbek"
 
@@ -55,59 +53,74 @@ msgstr "Devices on map"
 msgid "Change password"
 msgstr "Change password"
 
-#: .\templates\base.html:73
+#: .\templates\base.html:70
 msgid "Logout"
 msgstr "Logout"
 
-#: .\templates\view_measurements.html:9
+#: .\templates\base.html:83
+msgid "test rejim"
+msgstr "Website is working in test mode"
+
+#: .\templates\view_measurements.html:10
+#: .\templates\view_measurements_uzstandart.html:10
 msgid "Qurilmalar ro'yxatiga qaytish"
 msgstr "Back to devices list"
 
-#: .\templates\view_measurements.html:24
+#: .\templates\view_measurements.html:26
+#: .\templates\view_measurements_uzstandart.html:26
 msgid "So'nggi soat"
 msgstr "Last hour"
 
-#: .\templates\view_measurements.html:42
-#: .\templates\view_measurements.html:303
+#: .\templates\view_measurements.html:44
+#: .\templates\view_measurements.html:305
+#: .\templates\view_measurements_uzstandart.html:44
+#: .\templates\view_measurements_uzstandart.html:236
 msgid "PM2.5 - So'nggi 24 soat"
 msgstr "PM2.5 - Last 24 hours"
 
-#: .\templates\view_measurements.html:44
+#: .\templates\view_measurements.html:46
+#: .\templates\view_measurements_uzstandart.html:46
 msgid "24 soat"
 msgstr "24 hours"
 
-#: .\templates\view_measurements.html:45
+#: .\templates\view_measurements.html:47
+#: .\templates\view_measurements_uzstandart.html:47
 msgid "30 kun"
 msgstr "30 days"
 
-#: .\templates\view_measurements.html:59
+#: .\templates\view_measurements.html:61
+#: .\templates\view_measurements_uzstandart.html:62
 msgid "Good"
 msgstr "Good"
 
-#: .\templates\view_measurements.html:60
+#: .\templates\view_measurements.html:62
+#: .\templates\view_measurements_uzstandart.html:61
 msgid "Not measured"
 msgstr "Not measured"
 
-#: .\templates\view_measurements.html:61
+#: .\templates\view_measurements.html:63
+#: .\templates\view_measurements_uzstandart.html:63
 msgid "Moderate"
 msgstr "Moderate"
 
-#: .\templates\view_measurements.html:62
+#: .\templates\view_measurements.html:64
 msgid "Unhealthy for sensitive groups"
 msgstr "Unhealthy for sensitive groups"
 
-#: .\templates\view_measurements.html:63
+#: .\templates\view_measurements.html:65
+#: .\templates\view_measurements_uzstandart.html:64
 msgid "Unhealthy"
 msgstr "Unhealthy"
 
-#: .\templates\view_measurements.html:64
+#: .\templates\view_measurements.html:66
 msgid "Very unhealthy"
 msgstr "Very unhealthy"
 
-#: .\templates\view_measurements.html:65
+#: .\templates\view_measurements.html:67
 msgid "Hazardous"
 msgstr "Hazardous"
 
-#: .\templates\view_measurements.html:310
+#: .\templates\view_measurements.html:312
+#: .\templates\view_measurements_uzstandart.html:243
 msgid "PM2.5 - So'nggi 30 kun"
 msgstr "PM2.5 - Last 24 hours"

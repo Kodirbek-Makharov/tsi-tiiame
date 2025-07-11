@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-10 23:10+0500\n"
+"POT-Creation-Date: 2025-07-11 19:11+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,24 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: .\templates\base.html:27
-msgid "project title"
+msgid "project title new"
 msgstr ""
-"# 349-000021 - O'rta Osiyoda salohiyatni va aholining xabardorligini "
-"oshirish orqali havo sifatini yaxshilash uchun arzon havo sifati sensori "
-"tarmog'ini joriy etish"
+"<a href='/'>“Markaziy Osiyoda salohiyatni va aholining xabardorligini oshirish orqali "
+"havo sifatini yaxshilash uchun arzon havo sifati datchiklari tarmog‘ini "
+"joriy etish” mavzusidagi loyiha doirasida o‘rnatilgan datchiklar "
+"ma’lumotlari.</a><br><a href='https://tiiame.uz/departments/departments?id=637'>https://tiiame.uz/departments/departments?"
+"id=637</a><br>PM<sub>2.5</sub>, mkg/m<sup>3</sup>"
 
-#: .\templates\base.html:34 .\templates\base.html:49 .\templates\base.html:72
-#: .\tsi\settings.py:115
+#: .\templates\base.html:34 .\templates\base.html:49 .\tsi\settings.py:115
 msgid "English"
 msgstr "Inglizcha"
 
-#: .\templates\base.html:36 .\templates\base.html:54 .\templates\base.html:71
-#: .\tsi\settings.py:116
+#: .\templates\base.html:36 .\templates\base.html:54 .\tsi\settings.py:116
 msgid "Russian"
 msgstr "Ruscha"
 
-#: .\templates\base.html:38 .\templates\base.html:44 .\templates\base.html:70
-#: .\tsi\settings.py:117
+#: .\templates\base.html:38 .\templates\base.html:44 .\tsi\settings.py:117
 msgid "Uzbek"
 msgstr "O'zbekcha"
 
@@ -55,59 +54,74 @@ msgstr "Qurilmalar xaritada"
 msgid "Change password"
 msgstr "Parolni o'zgartirish"
 
-#: .\templates\base.html:73
+#: .\templates\base.html:70
 msgid "Logout"
 msgstr "Chiqish"
 
-#: .\templates\view_measurements.html:9
+#: .\templates\base.html:83
+msgid "test rejim"
+msgstr "Vebsayt test rejimida ishlayapti"
+
+#: .\templates\view_measurements.html:10
+#: .\templates\view_measurements_uzstandart.html:10
 msgid "Qurilmalar ro'yxatiga qaytish"
 msgstr "Qurilmalar ro'yxatiga qaytish"
 
-#: .\templates\view_measurements.html:24
+#: .\templates\view_measurements.html:26
+#: .\templates\view_measurements_uzstandart.html:26
 msgid "So'nggi soat"
 msgstr "So'nggi soat"
 
-#: .\templates\view_measurements.html:42
-#: .\templates\view_measurements.html:303
+#: .\templates\view_measurements.html:44
+#: .\templates\view_measurements.html:305
+#: .\templates\view_measurements_uzstandart.html:44
+#: .\templates\view_measurements_uzstandart.html:236
 msgid "PM2.5 - So'nggi 24 soat"
 msgstr "PM2.5 - So'nggi 24 soat"
 
-#: .\templates\view_measurements.html:44
+#: .\templates\view_measurements.html:46
+#: .\templates\view_measurements_uzstandart.html:46
 msgid "24 soat"
 msgstr "24 soat"
 
-#: .\templates\view_measurements.html:45
+#: .\templates\view_measurements.html:47
+#: .\templates\view_measurements_uzstandart.html:47
 msgid "30 kun"
 msgstr "30 kun"
 
-#: .\templates\view_measurements.html:59
+#: .\templates\view_measurements.html:61
+#: .\templates\view_measurements_uzstandart.html:62
 msgid "Good"
 msgstr "Yaxshi"
 
-#: .\templates\view_measurements.html:60
+#: .\templates\view_measurements.html:62
+#: .\templates\view_measurements_uzstandart.html:61
 msgid "Not measured"
 msgstr "O'lchanmagan"
 
-#: .\templates\view_measurements.html:61
+#: .\templates\view_measurements.html:63
+#: .\templates\view_measurements_uzstandart.html:63
 msgid "Moderate"
 msgstr "O'rtacha"
 
-#: .\templates\view_measurements.html:62
+#: .\templates\view_measurements.html:64
 msgid "Unhealthy for sensitive groups"
 msgstr "Sezuvchan guruhlar uchun zararli"
 
-#: .\templates\view_measurements.html:63
+#: .\templates\view_measurements.html:65
+#: .\templates\view_measurements_uzstandart.html:64
 msgid "Unhealthy"
-msgstr "Zararli"
+msgstr "Nosog‘lom"
 
-#: .\templates\view_measurements.html:64
+#: .\templates\view_measurements.html:66
 msgid "Very unhealthy"
 msgstr "Juda zararli"
 
-#: .\templates\view_measurements.html:65
+#: .\templates\view_measurements.html:67
 msgid "Hazardous"
 msgstr "Xavfli"
 
-#: .\templates\view_measurements.html:310
+#: .\templates\view_measurements.html:312
+#: .\templates\view_measurements_uzstandart.html:243
 msgid "PM2.5 - So'nggi 30 kun"
 msgstr "PM2.5 - So'nggi 30 kun"

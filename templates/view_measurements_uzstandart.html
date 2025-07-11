@@ -61,22 +61,22 @@
         let nm = "{% trans 'Not measured' %}";
         let good = "{% trans 'Good' %}";
         let moderate = "{% trans 'Moderate' %}";
-        let unhealthy1 = "{% trans 'Unhealthy for sensitive groups' %}";
-        let unhealthy2 = "{% trans 'Unhealthy' %}";
-        let unhealthy3 = "{% trans 'Very unhealthy' %}";
-        let hazardous = "{% trans 'Hazardous' %}";
+        let unhealthy1 = "{% trans 'Unhealthy' %}";
         const gauge = document.getElementById('gauge');
         const category = document.getElementById('air-quality-category');
         if (isNaN(pm25Value)) {
             gauge.classList.add('error');
             category.textContent = nm;
         }
-        else if (pm25Value <= 50) {
+        else if (pm25Value <= 35) {
             gauge.classList.add('good');
             category.textContent = good;
-        } else {
+        } else if (pm25Value <= 60) {
             gauge.classList.add('moderate');
             category.textContent = moderate;
+        } else {
+            gauge.classList.add('unhealthy1');
+            category.textContent = unhealthy1;
         }
 
 
@@ -89,12 +89,15 @@
             gauge_.classList.add('error');
             category_.textContent = nm;
         }
-        else if (pm25Value_ <= 50) {
+        else if (pm25Value_ <= 36) {
             gauge_.classList.add('good');
             category_.textContent = good;
-        } else {
+        } else if (pm25Value_ <= 60) {
             gauge_.classList.add('moderate');
             category_.textContent = moderate;
+        } else {
+            gauge_.classList.add('unhealthy1');
+            category_.textContent = unhealthy1;
         }
     </script>
     {% if LANGUAGE_CODE == "uz" %}
@@ -106,14 +109,19 @@
             <th style="vertical-align:middle">Havo sifati tavsifi</th>
         </tr>
         <tr class="good">
-            <td>0-50</td>
+            <td>0-35</td>
             <td>Yaxshi</td>
-            <td>Havo sifati qoniqarli va havoning ifloslanishi juda kam yoki umuman xavf tug'dirmaydi.</td>
+            <td>Havo sifati yaxshi va havoning ifloslanishi umuman xavf tug‘dirmaydi yoki juda kam xavf tug‘diradi</td>
         </tr>
         <tr class="moderate">
-            <td>51-100</td>
+            <td>35.1-60</td>
             <td>O'rtacha</td>
-            <td>Havoning sifati maqbuldir. Biroq, ba'zi odamlar, ayniqsa havo ifloslanishiga juda sezgir bo'lganlar uchun xavf mavjud.</td>
+            <td>Havoning sifati qoniqarli. Biroq, ba’zi odamlar, ayniqsa havo ifloslanishiga juda sezgir bo‘lganlar uchun xavf mavjud.</td>
+        </tr>
+        <tr class="unhealthy1">
+            <td>60.1+</td>
+            <td>Nosog‘lom</td>
+            <td>Sog‘liqka ta’sir qilish xavfi mavjud, sezgir guruhlar a’zolari sog‘ligiga xavf darajasi yuqori.</td>
         </tr>
     </table>
     {% elif LANGUAGE_CODE == "ru" %}
@@ -125,14 +133,19 @@
             <th style="vertical-align:middle">Описание качества воздуха</th>
         </tr>
         <tr class="good">
-            <td>0-50</td>
-            <td>Хорошо</td>
-            <td>Качество воздуха удовлетворительное, а загрязнение воздуха представляет небольшой или нулевой риск.</td>
+            <td>0-35</td>
+            <td>Хорошее</td>
+            <td>Качество воздуха хорошее и загрязнение воздуха представляет нулевой или небольшой риск.</td>
         </tr>
         <tr class="moderate">
-            <td>51-100</td>
-            <td>Умеренно</td>
-            <td>Качество воздуха приемлемое. Однако для некоторых людей, особенно тех, кто необычно чувствителен к загрязнению воздуха, может быть риск.</td>
+            <td>35.1-60</td>
+            <td>Среднее</td>
+            <td>Качество воздуха приемлемое. Однако для некоторых людей, особенно для тех, кто чувствителен к загрязнению воздуха, существует риск.</td>
+        </tr>
+        <tr class="unhealthy1">
+            <td>60.1+</td>
+            <td>Вредное</td>
+            <td>Существует риск воздействия на здоровье, существенный риск членам чувствительных групп.</td>
         </tr>
     </table>
     {% elif LANGUAGE_CODE == "en" %}
@@ -144,14 +157,19 @@
             <th style="vertical-align:middle">Description of Air Quality</th>
         </tr>
         <tr class="good">
-            <td>0-50</td>
+            <td>0-35</td>
             <td>Good</td>
-            <td>Air quality is satisfactory, and air pollution poses little or no risk.</td>
+            <td>The air quality is good and air pollution poses no or little risk.</td>
         </tr>
         <tr class="moderate">
-            <td>51-100</td>
+            <td>35.1-60</td>
             <td>Moderate</td>
-            <td>Air quality is acceptable. However, there may be a risk for some people, particularly those who are unusually sensitive to air pollution.</td>
+            <td>The air quality is acceptable. However, for some people, especially those who are sensitive to air pollution, there is a risk.</td>
+        </tr>
+        <tr class="unhealthy1">
+            <td>60.1+</td>
+            <td>Unhealthy</td>
+            <td>There is a risk to human health, a significant risk to members of sensitive groups.</td>
         </tr>
     </table>
     {% endif %}
@@ -175,8 +193,9 @@
             function createChart(labels, pm25_values) {
                 const backgroundColors = pm25_values.map(value => {
                     if (!value) return 'rgba(189, 195, 199, 0.5)';
-                    if (value <= 50) return 'rgba(0, 228, 0, 0.5)';     // Good 
-                    return 'rgba(255, 235, 59, 0.5)';                   // Moderate 
+                    if (value <= 35) return 'rgba(0, 228, 0, 0.5)';     // Good 
+                    if (value <= 60) return 'rgba(255, 235, 59, 0.5)'; // Moderate 
+                    return 'rgba(255, 145, 0, 0.5)'; // USG
                 });
 
                 if (pm25Chart) {
@@ -261,29 +280,6 @@
     .unhealthy1 {
         background-color: #ff9100 !important;
         --bs-table-bg: #ff9100 !important;
-    }
-
-    .unhealthy2 {
-        background-color: red !important;
-        --bs-table-bg: red !important;
-    }
-
-    .unhealthy3 {
-        background-color: rgb(143, 63, 151) !important;
-        --bs-table-bg: rgb(143, 63, 151) !important;
-    }
-
-    .hazardous {
-        background-color: rgb(126, 0, 35) !important;
-        --bs-table-bg: rgb(126, 0, 35) !important;
-    }
-
-    table .hazardous,
-    table .unhealthy3 {
-        color: aliceblue !important;
-        --bs-table-color: aliceblue !important;
-        --bs-table-hover-color: aliceblue !important;
-
     }
 
     .gauge {

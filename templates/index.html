@@ -64,9 +64,9 @@
 
         function getColor(value) {
             if (!value) return 'rgba(189, 195, 199)';
-            if (value <= 50) return 'rgba(0, 228, 0)';     // Good 
-            return 'rgba(255, 235, 59)'; // Moderate 
-            // if (value <= 100) return 'rgba(255, 235, 59)'; // Moderate 
+            if (value <= 35) return 'rgba(0, 228, 0)';     // Good 
+            if (value <= 60) return 'rgba(255, 235, 59)'; // Moderate 
+            return 'rgba(255, 145, 0)'; // USG
             // if (value <= 150) return 'rgba(255, 145, 0)';  // Unhealthy for Sensitive Groups
             // if (value <= 200) return 'rgba(255, 0, 0)';    // Unhealthy 
             // if (value <= 300) return 'rgba(143, 63, 151)'; // Very Unhealthy
@@ -77,6 +77,7 @@
         devices.forEach(device => {
             const lat = parseFloat(device.lat);
             const lng = parseFloat(device.lng);
+            const color = getColor(device.pm25);
             if (!device.is_indoor)
                 marker_html = `<div style="
                                 background-image: url('{% static "icons/location.png" %}');
@@ -104,22 +105,22 @@
                                 background-size: cover;
                                 background-repeat: no-repeat;
                                 position: absolute;
-                                width: 36px; 
+                                width: 42px; 
                                 height: 48px; 
                                  display: flex; 
                                  align-items: start; 
                                  justify-content: center; 
-                                 font-weight: bold;"><span style="width: 30px;
-                                                            height: 30px;
-                                                            border-radius: 50%;
+                                 font-weight: bold;"><span style="width: 28px;
+                                                            height: 26px;
+                                                            border-radius: 5%;
                                                             background-color: ${color};
                                                             color: black;
                                                             text-align: center;
-                                                            padding: 2px 0;
+                                                            padding: 1px 0;
                                                             font-size: 16px;
-                                                            margin-top: 2.5px;
+                                                            margin-top: 9px;
+                                                            z-index: -2
                                     ">${!device.pm25 ? '!' : device.pm25}</span></div>`;
-            const color = getColor(device.pm25);
             const icon = L.divIcon({
                 className: 'custom-icon',
                 html: marker_html,
