@@ -24,7 +24,7 @@
                 <div class="col-1 pt-1">
                 </div>
                 <div class="col-10 text-center fs-3">
-                    <h1 class="lh-1"><span style="font-size: 20pt;" class="blog-header-logo text-body-emphasis text-decoration-none" href="/">{% trans "project title new" %}</span></h1>
+                    <h1 class="lh-1"><span style="font-size: 16pt;" class="blog-header-logo text-body-emphasis text-decoration-none" href="/">{% trans "project title new" %}</span></h1>
                 </div>
                 <div class="col-1 d-flex flex-column justify-content-end align-items-end align-self-end">
 
@@ -77,11 +77,19 @@
     {% endblock %}
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
+            <div style="flex: 1;">
                 <span class="mb-3 mb-md-0 text-body-secondary">© 2024 - {% now "Y" %}</span>
+                <br>
+                <!-- {% trans "test rejim" %}. -->
+                {% if LANGUAGE_CODE == "uz" %}
+                Vebsayt test rejimida ishlayapti. Loyiha haqida qo‘shimcha ma’lumot uchun telegram: +998 (90) 321 3437, e-mail: m.amonov@tiiame.uz
+                {% elif LANGUAGE_CODE == "ru" %}
+                Вебсайт работает в тестовом режиме. Для дополнительной информации телеграмм: +998 (90) 321 3437, e-mail: m.amonov@tiiame.uz
+                {% elif LANGUAGE_CODE == "en" %}
+                Website is working in test mode. For additional info about project telegram: +998 (90) 321 3437, e-mail: m.amonov@tiiame.uz
+                {% endif %}
             </div>
-            <div>{% trans "test rejim" %}</div>
-            <div class="col-md-4 d-flex align-items-center justify-content-end">
+            <div class="d-flex align-items-center justify-content-end">
                 <a href="https://info.flagcounter.com/Lg7o">
                     <img src="https://s01.flagcounter.com/count2/Lg7o/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_3/labels_1/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0">
                 </a>

@@ -20,10 +20,9 @@ msgstr ""
 #: .\templates\base.html:27
 msgid "project title new"
 msgstr ""
-"<a href='/'>Data obtained from sensors installed under the project: “Implementation of a "
+"<a href='https://tiiame.uz/departments/departments?id=637&lang=en' target='_blank'>Data obtained from sensors installed under the project: “Implementation of a "
 "low-cost air quality sensor network in Central Asia to improve air quality "
-"through capacity building and increased public awareness”.</a><br><a href='https://tiiame.uz/departments/departments?id=637'>https://tiiame."
-"uz/departments/departments?id=637</a><br>PM<sub>2.5</sub>, µg/m<sup>3</sup>"
+"through capacity building and increased public awareness”</a><br>PM<sub>2.5</sub>, µg/m<sup>3</sup>"
 
 #: .\templates\base.html:34 .\templates\base.html:49 .\tsi\settings.py:115
 msgid "English"

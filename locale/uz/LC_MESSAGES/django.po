@@ -20,11 +20,10 @@ msgstr ""
 #: .\templates\base.html:27
 msgid "project title new"
 msgstr ""
-"<a href='/'>“Markaziy Osiyoda salohiyatni va aholining xabardorligini oshirish orqali "
+"<a href='https://tiiame.uz/departments/departments?id=637&lang=uz' target='_blank'>“Markaziy Osiyoda salohiyatni va aholining xabardorligini oshirish orqali "
 "havo sifatini yaxshilash uchun arzon havo sifati datchiklari tarmog‘ini "
 "joriy etish” mavzusidagi loyiha doirasida o‘rnatilgan datchiklar "
-"ma’lumotlari.</a><br><a href='https://tiiame.uz/departments/departments?id=637'>https://tiiame.uz/departments/departments?"
-"id=637</a><br>PM<sub>2.5</sub>, mkg/m<sup>3</sup>"
+"ma’lumotlari</a><br>PM<sub>2.5</sub>, mkg/m<sup>3</sup>"
 
 #: .\templates\base.html:34 .\templates\base.html:49 .\tsi\settings.py:115
 msgid "English"

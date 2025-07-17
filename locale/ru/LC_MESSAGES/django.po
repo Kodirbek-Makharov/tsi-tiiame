@@ -22,11 +22,10 @@ msgstr ""
 #: .\templates\base.html:27
 msgid "project title new"
 msgstr ""
-"<a href='/'>Данные, полученные от датчиков, установленных по проекту на тему: “Внедрение "
+"<a href='https://tiiame.uz/departments/departments?id=637&lang=ru' target='_blank'>Данные, полученные от датчиков, установленных по проекту на тему: “Внедрение "
 "сети недорогих датчиков качества воздуха в Центральной Азии для улучшения "
 "качества воздуха за счет наращивания потенциала и повышения осведомленности "
-"населения”.</a><br><a href='https://tiiame.uz/departments/departments?id=637'>https://tiiame.uz/departments/departments?"
-"id=637</a><br>PM<sub>2.5</sub>, мкг/м<sup>3</sup>"
+"населения”</a><br>PM<sub>2.5</sub>, мкг/м<sup>3</sup>"
 
 #: .\templates\base.html:34 .\templates\base.html:49 .\tsi\settings.py:115
 msgid "English"

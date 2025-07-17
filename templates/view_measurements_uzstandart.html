@@ -3,13 +3,18 @@
 {% load i18n %}
 
 {% block main %}
-
+<style>
+    h4 {
+        font-size: 1.3em !important;
+    }
+</style>
 <div class="container mt-4">
-    <h2 class="text-center fw-bold" style="position: relative;">{{ device.name }}
+    <!-- <h4 class="text-center fw-bold" style="position: relative;">
+        {{ device.name }}
         {% if user.is_authenticated %}
         <a href="{% url 'devices' %}" class="btn btn-secondary float-end">{% trans "Qurilmalar ro'yxatiga qaytish" %}</a>
         {% endif %}
-    </h2>
+    </h4> -->
 
     {% if messages %}
     <div class="alert alert-{{ messages.0.tags }}">
@@ -18,7 +23,7 @@
     {% endif %}
     {% if request.user.is_authenticated %}
     {% endif %}
-    <div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="container d-flex justify-content-center align-items-center mt-2">
         <div class="row w-100 justify-content-center">
             <div class="col-md-4 col-lg-3 mb-3">
                 <div class="gauge bg-light rounded d-flex align-items-center justify-content-center shadow" id="gauge" style="display: none!important;">
@@ -41,13 +46,12 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h3 class="text-center my-3" id="pm25BarChartTitle">{% trans "PM2.5 - So'nggi 24 soat" %}
+                <h4 class="text-center my-3 fw-bold" id="pm25BarChartTitle">
                     <div class="btn-group" role="group" aria-label="Toggle Data" style="float: right;">
                         <button id="btn-daily" class="btn btn-primary">{% trans '24 soat' %}</button>
                         <button id="btn-monthly" class="btn btn-secondary">{% trans '30 kun' %}</button>
                     </div>
-
-                </h3>
+                </h4>
                 <canvas id="pm25BarChart" width="400" height="200"></canvas>
 
 
@@ -101,73 +105,73 @@
         }
     </script>
     {% if LANGUAGE_CODE == "uz" %}
-    <h3 class="text-center mt-3">Havo sifati ko'rsatkichlari</h3>
-    <p>O‘zbekistonda 2023-yil 7-avgustda qabul qilingan № 0053-23 raqamli Sanitar qoidalar va normalarga asosan PM<sub>2.5</sub> ni atmoshfera havosidagi o‘rtacha yillik miqdori 35 mkg/m<sup>3</sup> yoki undan kam, o‘rtacha kunlik miqdori 60 mkg/m<sup>3</sup> yoki undan kam bolishi kerak. Shunga asoslanib quyidagi jadvalda keltirilgan malumotni shakllantirish mumkin.</p>
-    <table class="table table-hover">
+    <h4 class="text-center mt-3">Havo sifati ko'rsatkichlari</h4>
+    <p style="font-size: 1.1em;">O‘zbekistonda 2023-yil 7-avgustda qabul qilingan № 0053-23 raqamli Sanitar qoidalar va normalarga asosan PM<sub>2.5</sub> ni atmosfera havosidagi o‘rtacha yillik miqdori 35 mkg/m<sup>3</sup> yoki undan kam, o‘rtacha kunlik miqdori 60 mkg/m<sup>3</sup> yoki undan kam bolishi kerak. Shunga asoslanib quyidagi jadvalda keltirilgan malumotni shakllantirish mumkin.</p>
+    <table class="table table-hover" style="font-size: 1.1em;">
         <tr class="header">
-            <th style="vertical-align:middle">Indeks qiymatlari</th>
+            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub>, mkg/m<sup>3</sup></th>
             <th style="vertical-align:middle">Daraja</th>
-            <th style="vertical-align:middle">Havo sifati tavsifi</th>
+            <th style="vertical-align:middle">Havo sifati ta’siri tavsifi</th>
         </tr>
         <tr class="good">
             <td>0-35</td>
             <td>Yaxshi</td>
-            <td>Havo sifati yaxshi va havoning ifloslanishi umuman xavf tug‘dirmaydi yoki juda kam xavf tug‘diradi</td>
+            <td>Havo sifati yaxshi va havoning ifloslanishi inson sog‘ligiga umuman xavf tug‘dirmaydi yoki juda kam xavf tug‘diradi.</td>
         </tr>
         <tr class="moderate">
             <td>35.1-60</td>
             <td>O'rtacha</td>
-            <td>Havoning sifati qoniqarli. Biroq, ba’zi odamlar, ayniqsa havo ifloslanishiga juda sezgir bo‘lganlar uchun xavf mavjud.</td>
+            <td>Havoning sifati qoniqarli. Biroq, ba’zi odamlar, ayniqsa havo ifloslanishiga juda sezgir bo‘lganlar sog‘ligiga xavf mavjud.</td>
         </tr>
         <tr class="unhealthy1">
             <td>60.1+</td>
             <td>Nosog‘lom</td>
-            <td>Sog‘liqka ta’sir qilish xavfi mavjud, sezgir guruhlar a’zolari sog‘ligiga xavf darajasi yuqori.</td>
+            <td>Inson sog‘ligiga ta’sir qilish xavfi mavjud, sezgir guruhlar a’zolari sog‘ligiga xavf darajasi yuqori.</td>
         </tr>
     </table>
     {% elif LANGUAGE_CODE == "ru" %}
-    <h3 class="text-center mt-3">Показатели качества воздуха</h3>
-    <p>В Узбекистане был принят Санитарные правила и нормы № 0053-23 от 7 августа 2023 года, согласно которому среднее годовая концентрация РМ<sub>2.5</sub> в атмосферном воздухе должна быть не более 35 мкг/м<sup>3</sup> и среднее суточная концентрация РМ<sub>2.5</sub> не более 60 мкг/м<sup>3</sup>. Исходя из этого можно привести нижеследующую информацию приведенное в таблице.</p>
-    <table class="table table-hover">
+    <h4 class="text-center mt-3">Показатели качества воздуха</h4>
+    <p style="font-size: 1.1em;">В Узбекистане был принят Санитарные правила и нормы № 0053-23 от 7 августа 2023 года, согласно которому среднее годовая концентрация РМ<sub>2.5</sub> в атмосферном воздухе должна быть не более 35 мкг/м<sup>3</sup> и среднее суточная концентрация РМ<sub>2.5</sub> не более 60 мкг/м<sup>3</sup>. Исходя из этого можно привести нижеследующую информацию приведенное в таблице.</p>
+    <table class="table table-hover" style="font-size: 1.1em;">
         <tr class="header">
-            <th style="vertical-align:middle">Значения индекса</th>
+            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub>, мкг/м<sup>3</sup></th>
             <th style="vertical-align:middle">Уровень</th>
-            <th style="vertical-align:middle">Описание качества воздуха</th>
+            <th style="vertical-align:middle">Описание воздействия качество воздуха</th>
         </tr>
         <tr class="good">
             <td>0-35</td>
             <td>Хорошее</td>
-            <td>Качество воздуха хорошее и загрязнение воздуха представляет нулевой или небольшой риск.</td>
+            <td>Качество воздуха хорошее и загрязнение воздуха представляет нулевой или небольшой риск на здоровье людей.</td>
         </tr>
         <tr class="moderate">
             <td>35.1-60</td>
             <td>Среднее</td>
-            <td>Качество воздуха приемлемое. Однако для некоторых людей, особенно для тех, кто чувствителен к загрязнению воздуха, существует риск.</td>
+            <td>Качество воздуха приемлемое. Однако для здоровья некоторых людей, особенно для тех, кто чувствителен к загрязнению воздуха, существует риск.</td>
         </tr>
         <tr class="unhealthy1">
             <td>60.1+</td>
             <td>Вредное</td>
-            <td>Существует риск воздействия на здоровье, существенный риск членам чувствительных групп.</td>
+            <td>Существует риск воздействия на здоровье людей, существенный риск на здоровье членов чувствительных групп.</td>
         </tr>
     </table>
     {% elif LANGUAGE_CODE == "en" %}
-    <h3 class="text-center mt-3">Air quality indicators</h3>
-    <p>Uzbekistan adopted Sanitary Rules and Regulations # 0053-23 on August 7, 2023, according to that the average annual concentration of PM<sub>2.5</sub> in ambient air should be not more than 35 µg/m<sup>3</sup> and the average daily concentration of PM<sub>2.5</sub> should be noе more than 60 µg/m<sup>3</sup>. Based on this, possibly to provide the information in following table below.</p>
-    <table class="table table-hover">
+    <h4 class="text-center mt-3">Air quality indicators</h4>
+    <p style="font-size: 1.1em;">Uzbekistan adopted Sanitary Rules and Regulations # 0053-23 on August 7, 2023, according to that the average annual concentration of PM<sub>2.5</sub> in ambient air should be not more than 35 µg/m<sup>3</sup> and the average daily concentration of PM<sub>2.5</sub> should be noе more than 60 µg/m<sup>3</sup>. Based on this, possibly to provide the information in following table below.</p>
+    <table class="table table-hover" style="font-size: 1.1em;">
         <tr class="header">
-            <th style="vertical-align:middle">Values of Index</th>
+            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub>, µg/m<sup>3</sup></th>
             <th style="vertical-align:middle">Level</th>
-            <th style="vertical-align:middle">Description of Air Quality</th>
+            <th style="vertical-align:middle">Description of risk from air quality</th>
         </tr>
         <tr class="good">
             <td>0-35</td>
             <td>Good</td>
-            <td>The air quality is good and air pollution poses no or little risk.</td>
+            <td>The air quality is good, and air pollution poses no or little risk to human health.</td>
         </tr>
         <tr class="moderate">
             <td>35.1-60</td>
             <td>Moderate</td>
-            <td>The air quality is acceptable. However, for some people, especially those who are sensitive to air pollution, there is a risk.</td>
+            <td>The air quality is acceptable. However, for some people health, especially those who are sensitive to air pollution, there is a risk.</td>
         </tr>
         <tr class="unhealthy1">
             <td>60.1+</td>
@@ -221,7 +225,7 @@
                         options: {
                             scales: {
                                 x: { title: { display: false, text: '' } },
-                                y: { title: { display: true, text: 'PM2.5 (µg/m³)' }, beginAtZero: true }
+                                y: { title: { display: true, text: '' }, beginAtZero: true }
                             },
                             plugins: {
                                 legend: { display: false }
@@ -232,18 +236,19 @@
                     });
                 }
             }
+            document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{{ device.name }}`;
             document.getElementById("btn-daily").addEventListener("click", function () {
                 createChart(chartData.data24.labels, chartData.data24.pm25_values);
                 this.className = "btn btn-primary";
                 document.getElementById("btn-monthly").className = "btn btn-secondary";
-                document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{% trans "PM2.5 - So'nggi 24 soat" %}`;
+                // document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{% trans "PM2.5 - So'nggi 24 soat" %}`;
             });
 
             document.getElementById("btn-monthly").addEventListener("click", function () {
                 createChart(chartData.data30.labels, chartData.data30.pm25_values);
                 this.className = "btn btn-primary";
                 document.getElementById("btn-daily").className = "btn btn-secondary";
-                document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{% trans "PM2.5 - So'nggi 30 kun" %}`;
+                //document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{% trans "PM2.5 - So'nggi 30 kun" %}`;
             });
         });
 
