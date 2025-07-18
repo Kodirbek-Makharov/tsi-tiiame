@@ -43,10 +43,11 @@
 
                     </div>
                 </div>
+                <h4 class="text-center mt-3 fw-bold">{{ device.name }}</h4>
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h4 class="text-center my-3 fw-bold" id="pm25BarChartTitle">
+                <h4 class="text-right my-3 fw-bold" id="pm25BarChartTitle">
                     <div class="btn-group" role="group" aria-label="Toggle Data" style="float: right;">
                         <button id="btn-daily" class="btn btn-primary">{% trans '24 soat' %}</button>
                         <button id="btn-monthly" class="btn btn-secondary">{% trans '30 kun' %}</button>
@@ -106,20 +107,20 @@
     </script>
     {% if LANGUAGE_CODE == "uz" %}
     <h4 class="text-center mt-3">Havo sifati ko'rsatkichlari</h4>
-    <p style="font-size: 1.1em;">O‘zbekistonda 2023-yil 7-avgustda qabul qilingan № 0053-23 raqamli Sanitar qoidalar va normalarga asosan PM<sub>2.5</sub> ni atmosfera havosidagi o‘rtacha yillik miqdori 35 mkg/m<sup>3</sup> yoki undan kam, o‘rtacha kunlik miqdori 60 mkg/m<sup>3</sup> yoki undan kam bolishi kerak. Shunga asoslanib quyidagi jadvalda keltirilgan malumotni shakllantirish mumkin.</p>
+    <p style="font-size: 1.1em;">O‘zbekistonda 2023-yil 7-avgustda qabul qilingan № 0053-23 raqamli Sanitar qoidalar va normalarga asosan PM<sub>2.5</sub> ni atmosfera havosidagi o‘rtacha yillik miqdori 35&nbsp;mkg/m<sup>3</sup> yoki undan kam, o‘rtacha kunlik miqdori 60&nbsp;mkg/m<sup>3</sup> yoki undan kam bolishi kerak. Shunga asoslanib quyidagi jadvalda keltirilgan malumotni shakllantirish mumkin.</p>
     <table class="table table-hover" style="font-size: 1.1em;">
         <tr class="header">
-            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub>, mkg/m<sup>3</sup></th>
+            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub></th>
             <th style="vertical-align:middle">Daraja</th>
             <th style="vertical-align:middle">Havo sifati ta’siri tavsifi</th>
         </tr>
         <tr class="good">
-            <td>0-35</td>
+            <td>0&#8209;35</td>
             <td>Yaxshi</td>
             <td>Havo sifati yaxshi va havoning ifloslanishi inson sog‘ligiga umuman xavf tug‘dirmaydi yoki juda kam xavf tug‘diradi.</td>
         </tr>
         <tr class="moderate">
-            <td>35.1-60</td>
+            <td>35.1&#8209;60</td>
             <td>O'rtacha</td>
             <td>Havoning sifati qoniqarli. Biroq, ba’zi odamlar, ayniqsa havo ifloslanishiga juda sezgir bo‘lganlar sog‘ligiga xavf mavjud.</td>
         </tr>
@@ -131,20 +132,20 @@
     </table>
     {% elif LANGUAGE_CODE == "ru" %}
     <h4 class="text-center mt-3">Показатели качества воздуха</h4>
-    <p style="font-size: 1.1em;">В Узбекистане был принят Санитарные правила и нормы № 0053-23 от 7 августа 2023 года, согласно которому среднее годовая концентрация РМ<sub>2.5</sub> в атмосферном воздухе должна быть не более 35 мкг/м<sup>3</sup> и среднее суточная концентрация РМ<sub>2.5</sub> не более 60 мкг/м<sup>3</sup>. Исходя из этого можно привести нижеследующую информацию приведенное в таблице.</p>
+    <p style="font-size: 1.1em;">В Узбекистане был принят Санитарные правила и нормы № 0053-23 от 7 августа 2023 года, согласно которому среднее годовая концентрация РМ<sub>2.5</sub> в атмосферном воздухе должна быть не более 35&nbsp;мкг/м<sup>3</sup> и среднее суточная концентрация РМ<sub>2.5</sub> не более 60&nbsp;мкг/м<sup>3</sup>. Исходя из этого можно привести нижеследующую информацию приведенное в таблице.</p>
     <table class="table table-hover" style="font-size: 1.1em;">
         <tr class="header">
-            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub>, мкг/м<sup>3</sup></th>
+            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub></th>
             <th style="vertical-align:middle">Уровень</th>
             <th style="vertical-align:middle">Описание воздействия качество воздуха</th>
         </tr>
         <tr class="good">
-            <td>0-35</td>
+            <td>0&#8209;35</td>
             <td>Хорошее</td>
             <td>Качество воздуха хорошее и загрязнение воздуха представляет нулевой или небольшой риск на здоровье людей.</td>
         </tr>
         <tr class="moderate">
-            <td>35.1-60</td>
+            <td>35.1&#8209;60</td>
             <td>Среднее</td>
             <td>Качество воздуха приемлемое. Однако для здоровья некоторых людей, особенно для тех, кто чувствителен к загрязнению воздуха, существует риск.</td>
         </tr>
@@ -156,20 +157,20 @@
     </table>
     {% elif LANGUAGE_CODE == "en" %}
     <h4 class="text-center mt-3">Air quality indicators</h4>
-    <p style="font-size: 1.1em;">Uzbekistan adopted Sanitary Rules and Regulations # 0053-23 on August 7, 2023, according to that the average annual concentration of PM<sub>2.5</sub> in ambient air should be not more than 35 µg/m<sup>3</sup> and the average daily concentration of PM<sub>2.5</sub> should be noе more than 60 µg/m<sup>3</sup>. Based on this, possibly to provide the information in following table below.</p>
+    <p style="font-size: 1.1em;">Uzbekistan adopted Sanitary Rules and Regulations # 0053-23 on August 7, 2023, according to that the average annual concentration of PM<sub>2.5</sub> in ambient air should be not more than 35&nbsp;µg/m<sup>3</sup> and the average daily concentration of PM<sub>2.5</sub> should be noе more than 60&nbsp;µg/m<sup>3</sup>. Based on this, possibly to provide the information in following table below.</p>
     <table class="table table-hover" style="font-size: 1.1em;">
         <tr class="header">
-            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub>, µg/m<sup>3</sup></th>
+            <th style="vertical-align:middle; white-space: nowrap">PM<sub>2.5</sub></th>
             <th style="vertical-align:middle">Level</th>
             <th style="vertical-align:middle">Description of risk from air quality</th>
         </tr>
         <tr class="good">
-            <td>0-35</td>
+            <td>0&#8209;35</td>
             <td>Good</td>
             <td>The air quality is good, and air pollution poses no or little risk to human health.</td>
         </tr>
         <tr class="moderate">
-            <td>35.1-60</td>
+            <td>35.1&#8209;60</td>
             <td>Moderate</td>
             <td>The air quality is acceptable. However, for some people health, especially those who are sensitive to air pollution, there is a risk.</td>
         </tr>
@@ -236,7 +237,7 @@
                     });
                 }
             }
-            document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{{ device.name }}`;
+            //document.getElementById('pm25BarChartTitle').childNodes[0].nodeValue = `{{ device.name }}`;
             document.getElementById("btn-daily").addEventListener("click", function () {
                 createChart(chartData.data24.labels, chartData.data24.pm25_values);
                 this.className = "btn btn-primary";
